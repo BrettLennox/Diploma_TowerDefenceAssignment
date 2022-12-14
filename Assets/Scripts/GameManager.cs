@@ -38,6 +38,11 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape)) //if user inputs escape key
+        {
+            Application.Quit(); //quits the application
+        }
+
         if (_isAlive) //if isAlive is true
         {
             timer += Time.deltaTime; //increments timer by Time.deltaTime

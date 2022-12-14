@@ -24,6 +24,7 @@ public class FollowPath : MonoBehaviour
 
     private void NewWaypoints()
     {
+        //clears the waypoints list
         _waypoints.Clear();
         AStar pathFinder = GameObject.Find("GameManager").GetComponent<AStar>();
         foreach(Node node in pathFinder.FindShortestPath(pathFinder.start, pathFinder.end))
@@ -35,30 +36,30 @@ public class FollowPath : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //if Distance from transform position to the waypoints at moveIindex transform position is greater than offset
         if (Vector3.Distance(transform.position, _waypoints[_moveIndex].transform.position) > offset)
         {
-            dir = _waypoints[_moveIndex].position - transform.position;
-            dir.Normalize();
-            transform.Translate((dir * _moveSpeed) * Time.deltaTime);
+            dir = _waypoints[_moveIndex].position - transform.position; //dir is set to waypoints at moveIndex position - transform position
+            dir.Normalize(); //normalizes Dir
+            transform.Translate((dir * _moveSpeed) * Time.deltaTime); //transform position is updated by dir * moveSpeed * deltaTime
         }
         
-
+        //if Distance from transform position to the waypoints at moveIndex transform position is less than or equal to offset && moveIndex is less than waypoints list count -1
         if (Vector3.Distance(transform.position, _waypoints[_moveIndex].transform.position) <= offset && _moveIndex < _waypoints.Count - 1)
         {
-            _moveIndex++;
+            _moveIndex++; //increments moveIndex
         }
     }
 
     public void TakeDamage(int amount)
     {
-        currentHP -= amount;
+        currentHP -= amount; //decreases currentHP by amount passed in
 
-        if(currentHP <= 0)
+        if(currentHP <= 0) //if currentHP is less than or equal to 0
         {
-            Debug.Log(this.gameObject.name + "is now dead");
-            _moveSpeed = 0;
-            GameManager.instance.Enemies.Remove(this.gameObject);
-            Destroy(this.gameObject, 1f);
+            _moveSpeed = 0; //sets moveSpeed to 0
+            GameManager.instance.Enemies.Remove(this.gameObject); //removes this gameobject from Enemies list on GameManager
+            Destroy(this.gameObject, 1f); //Destroys this gameobject after 1 second
         }
     }
 }

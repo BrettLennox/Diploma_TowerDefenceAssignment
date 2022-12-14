@@ -13,14 +13,13 @@ public class EndZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Boat")
+        if(other.tag == "Boat") //if the trigger that enters is tagged Boat
         {
-            Debug.Log(other.name + " made it to the end.");
-            Destroy(other.gameObject, 0.5f);
-            _gm.Health -= 1;
-            if(_gm.Health <= 0)
+            Destroy(other.gameObject, 0.5f); //Destroy boat gameObject after 0.5 seconds
+            _gm.Health -= 1; //decreases Health on GameManager by 1
+            if(_gm.Health <= 0) //if Health is less than or equal to 0
             {
-                _gm.IsAlive = false;
+                _gm.IsAlive = false; //sets IsAlive on GameManager to false
             }
         }
     }
